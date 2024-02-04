@@ -1,19 +1,29 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { db } from "../firebase/firebaseConfig";
-import { collection, onSnapshot } from "firebase/firestore";
+// import { db } from "../firebase/firebaseConfig";
+// import { collection, onSnapshot } from "firebase/firestore";
 import { Filesystem, Directory, Encoding } from "@capacitor/filesystem";
 import { isPlatform } from "@ionic/react";
 import { base64FromPath } from "../utils";
-import { Photo } from "@capacitor/camera";
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from "@capacitor/camera";
 import { Capacitor } from "@capacitor/core";
 
-export const DataContext = createContext({});
+export const DataContext = createContext<{
+  todoList: TodoObj[];
+  setTodoList: React.Dispatch<React.SetStateAction<TodoObj[]>>;
+}>({ todoList: [], setTodoList: () => {} });
 
-interface Todo {
+
+export interface TodoObj {
   id: string;
-  text: string;
+  todo: string;
+  discription: string;
   completed: boolean;
-  image?: string;
+  attachmentImage?: string;
 }
 
 export interface UserPhoto {
@@ -21,15 +31,21 @@ export interface UserPhoto {
   webviewPath?: string;
 }
 
-const exampleData: Todo[] = [
-  { id: "1", text: "Task 1", completed: false },
-  { id: "2", text: "Task 2", completed: true },
-  // Add more tasks as needed
+const exampleData: TodoObj[] = [
+  { id: "1", todo: "Task 1", discription: "This is task1", completed: false },
+  { id: "2", todo: "Task 2", discription: "This is task1", completed: true },
+  { id: "3", todo: "Task 3", discription: "This is task1", completed: false },
+  { id: "4", todo: "Task 4", discription: "This is task1", completed: true },
 ];
 
 export function DataProvider({ children }: { children: ReactNode }) {
-  const [todoList, setTodoList] = useState([]);
-  const [user, setUser] = useState(null);
+  const [selectedPhoto, setSelectedPhoto] = useState<UserPhoto | null>(null);
+  const [todoList, setTodoList] = useState(exampleData);
+  // const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    console.log(selectedPhoto);
+  }, [selectedPhoto]);
 
   // useEffect(() => {
   //   if (user) {
@@ -55,7 +71,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   //   }
   // }, [user]);
 
-  const saveDataLocally = async (data: Todo[], filename: string) => {
+  const saveDataLocally = async (data: TodoObj[], filename: string) => {
     try {
       const jsonString = JSON.stringify(data);
 
@@ -70,6 +86,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
       console.log("Data saved locally:", jsonString);
     } catch (error) {
       console.error("Error saving data locally:", error);
+      
     }
   };
 
@@ -114,7 +131,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   };
 
   // Function to read data from a local file
-  const loadDataLocally = async (filename: string): Promise<Todo[] | null> => {
+  const loadDataLocally = async (filename: string): Promise<TodoObj[] | null> => {
     try {
       // Use the Filesystem API to read the JSON data from the file
       const result = await Filesystem.readFile({
@@ -135,8 +152,29 @@ export function DataProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const value = {};
+  const selectPhoto = async () => {
+    try {
+      const photo = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Photos, // Choose photo from the device's gallery
+      });
+
+      const savedPhoto = await savePictureLocally(photo, "selected_photo.jpg");
+      setSelectedPhoto(savedPhoto);
+    } catch (error) {
+      console.error("Error selecting photo:", error);
+    }
+  };
+
+  const value = {
+    selectPhoto,
+    loadDataLocally,
+    saveDataLocally,
+    todoList,
+    setTodoList,
+  };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 }
-
