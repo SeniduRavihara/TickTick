@@ -1,88 +1,74 @@
-import { useState } from "react";
-import { FcCalendar } from "react-icons/fc";
-import { FcTodoList } from "react-icons/fc";
-import { FcSettings } from "react-icons/fc";
-import { FcTimeline } from "react-icons/fc";
-// import { FcOvertime } from "react-icons/fc";
-// import { FcAlarmClock } from "react-icons/fc";
-// import { FcAddImage } from "react-icons/fc";
-// import { FcAbout } from "react-icons/fc";
-// import { FcGraduationCap } from "react-icons/fc";
-// import { FcLeft } from "react-icons/fc";
-// import { FcMenu } from "react-icons/fc";
-// import { FcOk } from "react-icons/fc";
+import React, { useState } from "react";
+import { LuListTodo } from "react-icons/lu";
+import { FaRegCalendar } from "react-icons/fa";
+import { IoMdTime } from "react-icons/io";
+import { IoSettingsOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+// import { Haptics, ImpactStyle } from "@capacitor/haptics";
 
-import { Capacitor } from "@capacitor/core";
-import { Haptics, ImpactStyle } from "@capacitor/haptics";
+const styles = {
+  touchBarIcon: "w-7 h-7 cursor-pointer text-gray-600",
+  touchedIcon: "w-5 h-5", // Add your desired color for the touched state
+};
 
 const touchbarIcons = [
   {
-    icon: <FcTodoList className="w-8 h-8 cursor-pointer" />,
+    icon: <LuListTodo className={`${styles.touchBarIcon}`} />,
     to: "/",
   },
   {
-    icon: <FcCalendar className="w-8 h-8 cursor-pointer" />,
+    icon: <FaRegCalendar className={`${styles.touchBarIcon}`} />,
     to: "calendar-page",
   },
   {
-    icon: <FcTimeline className="w-8 h-8 cursor-pointer" />,
+    icon: <IoMdTime className={`${styles.touchBarIcon}`} />,
     to: "habit-track-page",
   },
   {
-    icon: <FcSettings className="w-8 h-8 cursor-pointer" />,
+    icon: <IoSettingsOutline className={`${styles.touchBarIcon}`} />,
     to: "settings-page",
   },
 ];
 
 function Touchbar() {
-  const [isTouched, setIsTouched] = useState(false);
+  const [touchedIcon, setTouchedIcon] = useState<React.ReactNode | null>(null);
+  // const [currentRoute, setCurrentRoute] = useState();
 
-  const handleTouchStart = () => {
-    setIsTouched(true);
-    triggerHapticFeedback();
+  const handleTouchStart = (icon: React.ReactNode) => {
+    setTouchedIcon(icon);
+    // triggerHapticFeedback();
   };
 
   const handleTouchEnd = () => {
-    setIsTouched(false);
+    setTouchedIcon(null);
     // You can add additional logic or effects here
   };
 
-  const triggerHapticFeedback = async () => {
-    await Haptics.impact({ style: ImpactStyle.Light });
-  };
+  // const triggerHapticFeedback = async () => {
+  //   await Haptics.impact({ style: ImpactStyle.Light });
+  // };
 
   return (
     <div className="w-full h-[50px] bg-white/10 rounded-2xl fixed bottom-0 p-5 shadow-2xl shadow-black flex items-center justify-between">
-      {/* <Link
-        to="todolist-page"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-        // className={`${isTouched ? "bg-red-700" : ""} duration-500 ease-out`}
-      >
-        <FcTodoList className="w-10 h-10 cursor-pointer" />
-      </Link>
-      <Link to="calendar-page">
-        <FcCalendar className="w-10 h-10 cursor-pointer" />
-      </Link>
-      <Link to="habit-track-page">
-        <FcTimeline className="w-10 h-10 cursor-pointer" />
-      </Link>
-      <Link to="settings-page">
-        <FcSettings className="w-10 h-10 cursor-pointer" />
-      </Link> */}
-
       {touchbarIcons.map((obj) => (
         <Link
           key={obj.to}
           to={obj.to}
-          onTouchStart={handleTouchStart}
+          onTouchStart={() => handleTouchStart(obj.icon)}
           onTouchEnd={handleTouchEnd}
+          className="w-1/4 items-center justify-center flex"
         >
-          {obj.icon}
+          {React.cloneElement(obj.icon, {
+            className: `${
+              touchedIcon === obj.icon
+                ? `${styles.touchedIcon}`
+                : `${styles.touchBarIcon}`
+            } duration-200 ease-out`,
+          })}
         </Link>
       ))}
     </div>
   );
 }
+
 export default Touchbar;
