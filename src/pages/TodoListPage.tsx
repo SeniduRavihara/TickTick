@@ -16,17 +16,29 @@ import { CgCalendarTwo } from "react-icons/cg";
 import { TbFlag3 } from "react-icons/tb";
 import { GoTag } from "react-icons/go";
 import { BsThreeDots } from "react-icons/bs";
+import { IoSendSharp } from "react-icons/io5";
+import { TodoObj } from "../context/DataContext";
 
 function TodoListPage() {
-  const { todoList } = useData();
+  const { todoList, setTodoList } = useData();
   const [isOpenModalSheet, setOpenModalSheet] = useState(false);
-  // const [newTodo, setNewTodo] = useState("");
+  const [newTodo, setNewTodo] = useState<TodoObj>({
+    completed: false,
+    id: "",
+    attachmentImage: "",
+    discription: "",
+    todo: "",
+  });
 
   // const todoAddInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleAddClick = async () => {
     setOpenModalSheet(true);
     // if (todoAddInputRef.current) todoAddInputRef.current.focus();
+  };
+
+  const handleAddTodo = () => {
+    setTodoList(newTodo)
   };
 
   return (
@@ -52,12 +64,28 @@ function TodoListPage() {
                 className="px-5 p-2 outline-none w-full"
                 placeholder="What would you like to do?"
                 type="text"
+                value={newTodo.todo}
+                onChange={(e) =>
+                  setNewTodo((pre) => ({ ...pre, todo: e.target.value }))
+                }
               />
-              <div className="flex gap-5 text-gray-700/50">
-                <CgCalendarTwo />
-                <TbFlag3 />
-                <GoTag />
-                <BsThreeDots/>
+              <input
+                className="px-5 p-2 outline-none w-full"
+                placeholder="discription?"
+                type="text"
+                value={newTodo.discription}
+                onChange={(e) =>
+                  setNewTodo((pre) => ({ ...pre, discription: e.target.value }))
+                }
+              />
+              <div className="flex justify-between gap-5 text-gray-700/50">
+                <div className="flex gap-5 text-gray-700/50">
+                  <CgCalendarTwo />
+                  <TbFlag3 />
+                  <GoTag />
+                  <BsThreeDots />
+                </div>
+                <IoSendSharp onClick={handleAddTodo} />
               </div>
             </div>
           </DrawerBody>
