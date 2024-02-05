@@ -38,6 +38,28 @@ function TodoListPage() {
         onClick={handleAddClick}
       />
 
+      {/* <Sheet
+        isOpen={isOpenModalSheet}
+        detent="content-height"
+        onClose={() => setOpenModalSheet(false)}
+        onOpenStart={()=> (todoAddInputRef.current) && todoAddInputRef.current.focus()}
+      >
+        <Sheet.Container>
+          <Sheet.Header />
+          <Sheet.Content>
+            <div className="w-full p-5">
+              <input
+                ref={todoAddInputRef}
+                className="px-5 p-2 border w-full"
+                placeholder="What would you like to do?"
+                type="text"
+              />
+            </div>
+          </Sheet.Content>
+        </Sheet.Container>
+        <Sheet.Backdrop />
+      </Sheet> */}
+
       <Drawer
         placement={"bottom"}
         onClose={() => setOpenModalSheet(false)}
