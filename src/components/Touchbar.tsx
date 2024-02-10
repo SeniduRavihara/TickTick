@@ -49,7 +49,7 @@ function Touchbar() {
   // };
 
   return (
-    <div className="w-full h-[50px] bg-white/10 rounded-2xl fixed bottom-0 p-5 shadow-2xl shadow-black flex items-center justify-between">
+    <div className="w-full h-[50px] bg-white rounded-2xl fixed bottom-0 p-5 shadow-2xl shadow-black flex items-center justify-between">
       {touchbarIcons.map((obj) => (
         <Link
           key={obj.to}

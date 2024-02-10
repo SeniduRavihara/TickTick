@@ -1,10 +1,14 @@
+
 export type TodoObj = {
   id: string;
   todo: string;
   discription: string;
   completed: boolean;
   attachmentImage?: string;
+  timestamp?: Date;
 };
+
+export type TodoListType = TodoObj[]
 
 export type UserPhoto = {
   filepath: string;
@@ -12,6 +16,6 @@ export type UserPhoto = {
 };
 
 export type DataContextType = {
-  todoList: TodoObj[];
-  setTodoList: React.Dispatch<React.SetStateAction<TodoObj[]>>;
+  todoList: TodoListType;
+  setTodoList: React.Dispatch<React.SetStateAction<TodoListType>>;
 };

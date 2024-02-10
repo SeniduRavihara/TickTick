@@ -1,9 +1,12 @@
-import { Box, Collapse, } from "@chakra-ui/react";
+import { Box, Collapse, Checkbox } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TiAttachment } from "react-icons/ti";
-import Sheet from "react-modal-sheet";
-import { TodoObj } from "../context/DataContext";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { TbFlag3 } from "react-icons/tb";
+import BottomSheet from "./bottom_sheet/BottomSheet";
+import useData from "../hooks/useData";
+import { TodoObj } from "../types";
 
 function CompletedTodos({
   compleatedTodoList,
@@ -11,8 +14,20 @@ function CompletedTodos({
   compleatedTodoList: Array<TodoObj>;
 }) {
   const [isOpen, setIsOpen] = useState(true);
-  const [isOpenModalSheet, setOpenModalSheet] = useState(false);
+  const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<string>("");
+
+  const { setTodoList } = useData();
+
+  const handleCheckboxChange = (id: string) => {
+    setTodoList((prev) =>
+      prev.map((todoObj) =>
+        todoObj.id === id
+          ? { ...todoObj, completed: !todoObj.completed }
+          : todoObj
+      )
+    );
+  };
 
   return (
     <div>
@@ -43,13 +58,31 @@ function CompletedTodos({
                 <li
                   key={todoObj.id}
                   className="flex justify-between items-center"
-                  onClick={() => {
-                    setSelectedTodo(todoObj.todo);
-                    setOpenModalSheet(true);
-                  }}
                 >
-                  <h1 className="text-xl text-gray-700">{todoObj.todo}</h1>
-                  <TiAttachment className="cursor-pointer" />
+                  {/* <input
+                    type="checkbox"
+                    className="w-1/12 text-gray-500"
+                    checked={todoObj.completed}
+                    onChange={() => handleCheckboxChange(todoObj.id)}
+                  /> */}
+                  <Checkbox
+                    colorScheme="gray"
+                    iconColor="gray.100"
+                    // size="sm"
+                    defaultChecked
+                    // checked={todoObj.completed}
+                    onChange={() => handleCheckboxChange(todoObj.id)}
+                  ></Checkbox>
+                  <h1
+                    className="text-md text-gray-400 w-9/12"
+                    onClick={() => {
+                      setSelectedTodo(todoObj.todo);
+                      setIsOpenBottomSheet(true);
+                    }}
+                  >
+                    {todoObj.todo}
+                  </h1>
+                  <TiAttachment className="cursor-pointer 2/12" />
                 </li>
               ))}
             </ul>
@@ -57,26 +90,28 @@ function CompletedTodos({
         </Collapse>
       </div>
 
-      <Sheet
-        isOpen={isOpenModalSheet}
-        detent="content-height"
-        onClose={() => setOpenModalSheet(false)}
+      <BottomSheet
+        height={50}
+        isOpenBottomSheet={isOpenBottomSheet}
+        setIsOpenBottomSheet={setIsOpenBottomSheet}
+        dragIconDown={<IoIosArrowDown />}
+        dragIconUp={<IoIosArrowUp />}
       >
-        <Sheet.Container>
-          <Sheet.Header />
-          <Sheet.Content>
-            <div className="w-full py-10 h-[300px]">
-              <h1 className="text-black">{selectedTodo}</h1>
-              <input
-                className="bg-gray-700 w-full"
-                placeholder="add"
-                type="text"
-              />
-            </div>
-          </Sheet.Content>
-        </Sheet.Container>
-        <Sheet.Backdrop />
-      </Sheet>
+        <div className="flex flex-col">
+          <div className="flex justify-between items-center">
+            <IoIosArrowDown />
+            <h1>Inbox</h1>
+            <BsThreeDotsVertical />
+          </div>
+
+          <div className="flex justify-between items-center">
+            <div className="text-gray-600">Last Mon, 29 Jan</div>
+            <TbFlag3 />
+          </div>
+
+          <h1 className="text-black">{selectedTodo}</h1>
+        </div>
+      </BottomSheet>
     </div>
   );
 }

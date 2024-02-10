@@ -1,96 +1,133 @@
 import CompletedTodos from "../components/CompletedTodos";
 import PendingTodos from "../components/PendingTodos";
-// import Sheet from "react-modal-sheet";
 
 import { FaCirclePlus } from "react-icons/fa6";
+import { IoMdArrowBack } from "react-icons/io";
+import { SlMenu } from "react-icons/sl";
+import { BiPlanet } from "react-icons/bi";
+import { BsThreeDotsVertical } from "react-icons/bs";
+
 import useData from "../hooks/useData";
 import { useState } from "react";
+
 import {
   Drawer,
   DrawerBody,
   DrawerContent,
+  // DrawerHeader,
   DrawerOverlay,
 } from "@chakra-ui/react";
 
-import { CgCalendarTwo } from "react-icons/cg";
-import { TbFlag3 } from "react-icons/tb";
-import { GoTag } from "react-icons/go";
-import { BsThreeDots } from "react-icons/bs";
-import { IoSendSharp } from "react-icons/io5";
-import { TodoObj } from "../context/DataContext";
+import { TodoObj } from "../types";
+import MinDrawerContent from "../components/MinDrawerContent";
+import FullDrawerContent from "../components/FullDrawerContent";
+import { INITIAL_NEW_TODO_OBJ } from "../constants";
 
 function TodoListPage() {
-  const { todoList, setTodoList } = useData();
   const [isOpenModalSheet, setOpenModalSheet] = useState(false);
-  const [newTodo, setNewTodo] = useState<TodoObj>({
-    completed: false,
-    id: "",
-    attachmentImage: "",
-    discription: "",
-    todo: "",
-  });
+  const [newTodo, setNewTodo] = useState<TodoObj>(INITIAL_NEW_TODO_OBJ);
+  const [fullScreen, setFullScreen] = useState(false);
 
-  // const todoAddInputRef = useRef<HTMLInputElement | null>(null);
+  const { todoList, setTodoList } = useData();
+
+  // useEffect(() => {
+  //   setNewTodo((pre) => ({ ...pre, id: String(todoList.length + 1) }));
+  // }, [todoList]);
 
   const handleAddClick = async () => {
     setOpenModalSheet(true);
-    // if (todoAddInputRef.current) todoAddInputRef.current.focus();
   };
 
   const handleAddTodo = () => {
-    setTodoList(newTodo)
+    setTodoList((pre) => [
+      ...pre,
+      { ...newTodo, timestamp: new Date(), id: String(todoList.length + 1) },
+    ]);
+    setNewTodo(INITIAL_NEW_TODO_OBJ);
+    setOpenModalSheet(false);
   };
+
+  const handleClickPhoto = () => {};
+  const handleClickTemplate = () => {};
+  // const handleClickFullScreen = () => {
+  //   setFullScreen(true);
+  // };
 
   return (
     <div className="w-screen h-screen flex flex-col gap-10 p-3 ">
-      <PendingTodos />
-      <CompletedTodos compleatedTodoList={todoList} />
+      <div className="flex items-center justify-between px-2 pt-2">
+        <div className="flex items-center gap-5 text-2xl">
+          <SlMenu />
+          <h1 className="font-bold">Today</h1>
+        </div>
+        <div className="flex items-center gap-5 text-2xl">
+          <BiPlanet />
+          <BsThreeDotsVertical />
+        </div>
+      </div>
+
+      <PendingTodos
+        pendingTodoList={todoList.filter((todoObj) => !todoObj.completed)}
+      />
+      <CompletedTodos
+        compleatedTodoList={todoList.filter((todoObj) => todoObj.completed)}
+      />
       <FaCirclePlus
-        className="absolute bottom-20 right-7 text-gray-700 text-6xl"
+        className="fixed bottom-16 right-5 text-gray-700 text-5xl"
         onClick={handleAddClick}
       />
 
-      <Drawer
-        placement={"bottom"}
-        onClose={() => setOpenModalSheet(false)}
-        isOpen={isOpenModalSheet}
-      >
-        <DrawerOverlay />
-        <DrawerContent>
-          {/* <DrawerHeader borderBottomWidth="1px">ADD YOUR WORKS</DrawerHeader> */}
-          <DrawerBody>
-            <div className="w-full p-5 flex flex-col gap-3">
-              <input
-                className="px-5 p-2 outline-none w-full"
-                placeholder="What would you like to do?"
-                type="text"
-                value={newTodo.todo}
-                onChange={(e) =>
-                  setNewTodo((pre) => ({ ...pre, todo: e.target.value }))
-                }
-              />
-              <input
-                className="px-5 p-2 outline-none w-full"
-                placeholder="discription?"
-                type="text"
-                value={newTodo.discription}
-                onChange={(e) =>
-                  setNewTodo((pre) => ({ ...pre, discription: e.target.value }))
-                }
-              />
-              <div className="flex justify-between gap-5 text-gray-700/50">
-                <div className="flex gap-5 text-gray-700/50">
-                  <CgCalendarTwo />
-                  <TbFlag3 />
-                  <GoTag />
-                  <BsThreeDots />
-                </div>
-                <IoSendSharp onClick={handleAddTodo} />
-              </div>
-            </div>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <div>
+        {!fullScreen ? (
+          <Drawer
+            placement={"bottom"}
+            onClose={() => setOpenModalSheet(false)}
+            isOpen={isOpenModalSheet}
+            isFullHeight={false}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              {/* <DrawerHeader borderBottomWidth="1px">ADD YOUR WORKS</DrawerHeader> */}
+              <DrawerBody>
+                <MinDrawerContent
+                  handleAddTodo={handleAddTodo}
+                  newTodo={newTodo}
+                  setFullScreen={setFullScreen}
+                  setNewTodo={setNewTodo}
+                  handleClickPhoto={handleClickPhoto}
+                  handleClickTemplate={handleClickTemplate}
+                />
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        ) : (
+          <Drawer
+            placement={"bottom"}
+            onClose={() => setOpenModalSheet(false)}
+            isOpen={isOpenModalSheet}
+            isFullHeight={true}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              {/* <DrawerHeader borderBottomWidth="1px">ADD YOUR WORKS</DrawerHeader> */}
+              <DrawerBody>
+                <IoMdArrowBack
+                  onClick={() => {
+                    setOpenModalSheet(false);
+                    setFullScreen(false);
+                  }}
+                />
+                <FullDrawerContent
+                  handleAddTodo={handleAddTodo}
+                  newTodo={newTodo}
+                  setFullScreen={setFullScreen}
+                  setNewTodo={setNewTodo}
+                />
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+        )}
+      </div>
     </div>
   );
 }
