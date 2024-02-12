@@ -7,6 +7,7 @@ import { TbFlag3 } from "react-icons/tb";
 import BottomSheet from "./bottom_sheet/BottomSheet";
 import useData from "../hooks/useData";
 import { TodoObj } from "../types";
+import { INITIAL_NEW_TODO_OBJ } from "../constants";
 
 function CompletedTodos({
   compleatedTodoList,
@@ -15,7 +16,8 @@ function CompletedTodos({
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const [selectedTodo, setSelectedTodo] = useState<string>("");
+  const [selectedTodo, setSelectedTodo] =
+    useState<TodoObj>(INITIAL_NEW_TODO_OBJ);
 
   const { setTodoList } = useData();
 
@@ -76,7 +78,7 @@ function CompletedTodos({
                   <h1
                     className="text-md text-gray-400 w-9/12"
                     onClick={() => {
-                      setSelectedTodo(todoObj.todo);
+                      setSelectedTodo(todoObj);
                       setIsOpenBottomSheet(true);
                     }}
                   >
@@ -105,11 +107,21 @@ function CompletedTodos({
           </div>
 
           <div className="flex justify-between items-center">
-            <div className="text-gray-600">Last Mon, 29 Jan</div>
+            <div className="text-gray-600">
+              Last Mon, 29 Jan{" "}
+              {selectedTodo.timestamp instanceof Date
+                ? selectedTodo.timestamp.toLocaleDateString()
+                : ""}
+            </div>
             <TbFlag3 />
           </div>
 
-          <h1 className="text-black">{selectedTodo}</h1>
+          <div className="mt-4">
+            <h1 className="text-black text-xl font-bold">
+              {selectedTodo.todo}
+            </h1>
+            <p>{selectedTodo.discription}</p>
+          </div>
         </div>
       </BottomSheet>
     </div>
