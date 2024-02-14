@@ -1,4 +1,4 @@
-import { TodoListType } from "../types";
+import { TodoListType, TodoObj } from "../types";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TiAttachment } from "react-icons/ti";
@@ -7,14 +7,13 @@ import { TbFlag3 } from "react-icons/tb";
 import BottomSheet from "./bottom_sheet/BottomSheet";
 import useData from "../hooks/useData";
 import { Checkbox } from "@chakra-ui/react";
+import { formatDateString } from "../utils";
+import { INITIAL_NEW_TODO_OBJ } from "../constants";
 
-function PendingTodos({
-  pendingTodoList,
-}: {
-  pendingTodoList: TodoListType;
-}) {
+function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
-  const [selectedTodo, setSelectedTodo] = useState<string>("");
+  const [selectedTodo, setSelectedTodo] =
+    useState<TodoObj>(INITIAL_NEW_TODO_OBJ);
 
   const { setTodoList } = useData();
 
@@ -33,9 +32,7 @@ function PendingTodos({
       <div
         className={`w-full bg-white/50 shadow-sm rounded-lg flex flex-col p-3`}
       >
-        <div
-          className="flex justify-between items-center"
-        >
+        <div className="flex justify-between items-center">
           <h1 className="text-gray-600 font-bold">PENDING</h1>
         </div>
 
@@ -59,7 +56,7 @@ function PendingTodos({
               <h1
                 className="text-md text-gray-700 w-9/12"
                 onClick={() => {
-                  setSelectedTodo(todoObj.todo);
+                  setSelectedTodo(todoObj);
                   setIsOpenBottomSheet(true);
                 }}
               >
@@ -86,11 +83,18 @@ function PendingTodos({
           </div>
 
           <div className="flex justify-between items-center">
-            <div className="text-gray-600">Last Mon, 29 Jan</div>
+            <div className="text-gray-600">
+              {formatDateString(selectedTodo.timestamp)}
+            </div>
             <TbFlag3 />
           </div>
 
-          <h1 className="text-black">{selectedTodo}</h1>
+          <div className="mt-4">
+            <h1 className="text-black text-xl font-bold">
+              {selectedTodo.todo}
+            </h1>
+            <p>{selectedTodo.discription}</p>
+          </div>
         </div>
       </BottomSheet>
     </div>

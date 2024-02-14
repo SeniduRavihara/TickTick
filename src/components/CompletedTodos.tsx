@@ -1,5 +1,5 @@
 import { Box, Collapse, Checkbox } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TiAttachment } from "react-icons/ti";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -8,6 +8,7 @@ import BottomSheet from "./bottom_sheet/BottomSheet";
 import useData from "../hooks/useData";
 import { TodoObj } from "../types";
 import { INITIAL_NEW_TODO_OBJ } from "../constants";
+import { formatDateString } from "../utils";
 
 function CompletedTodos({
   compleatedTodoList,
@@ -21,6 +22,10 @@ function CompletedTodos({
 
   const { setTodoList } = useData();
 
+  useEffect(() => {
+    console.log(selectedTodo.timestamp?.toLocaleString());
+  }, [selectedTodo]);
+
   const handleCheckboxChange = (id: string) => {
     setTodoList((prev) =>
       prev.map((todoObj) =>
@@ -30,6 +35,9 @@ function CompletedTodos({
       )
     );
   };
+
+
+
 
   return (
     <div>
@@ -108,10 +116,8 @@ function CompletedTodos({
 
           <div className="flex justify-between items-center">
             <div className="text-gray-600">
-              Last Mon, 29 Jan{" "}
-              {selectedTodo.timestamp instanceof Date
-                ? selectedTodo.timestamp.toLocaleDateString()
-                : ""}
+              {/* Last Mon, 29 Jan */}
+              {formatDateString(selectedTodo.timestamp)}
             </div>
             <TbFlag3 />
           </div>

@@ -21,12 +21,17 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     loadDataLocally("todoListData.json").then((data) => {
-      setTodoList(data ?? exampleData);
+      const locallySavedTodoList = data?.map((todoObj) => ({
+        ...todoObj,
+        timestamp: todoObj.timestamp ? new Date(todoObj.timestamp) : undefined,
+      }));
+      setTodoList(locallySavedTodoList ? locallySavedTodoList : exampleData);
     });
   }, []);
 
+
   useEffect(() => {
-    console.log(todoList);
+    // console.log(todoList);
     if (todoList) saveDataLocally(todoList, "todoListData.json");
   }, [todoList]);
 
