@@ -81,10 +81,12 @@ function MinDrawerContent({
             <GoTag />
 
             <Menu
-              menuBtn={<BsThreeDots onClick={()=>inputRef.current?.focus()} />}
+              menuBtn={
+                <BsThreeDots onClick={() => inputRef.current?.focus()} />
+              }
               items={menuItems}
+              styles="-top-8"
             />
-
           </div>
           <IoSendSharp onClick={handleAddTodo} />
         </div>

@@ -1,4 +1,3 @@
-
 export type TodoObj = {
   id: string;
   todo: string;
@@ -8,7 +7,7 @@ export type TodoObj = {
   timestamp?: Date;
 };
 
-export type TodoListType = TodoObj[]
+export type TodoListType = TodoObj[];
 
 export type UserPhoto = {
   filepath: string;
@@ -18,4 +17,16 @@ export type UserPhoto = {
 export type DataContextType = {
   todoList: TodoListType;
   setTodoList: React.Dispatch<React.SetStateAction<TodoListType>>;
+};
+
+export type MenuItemType = {
+  label: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+};
+
+export type MenuPropsType = {
+  items: MenuItemType[];
+  menuBtn: React.ReactNode;
+  styles?: string;
 };

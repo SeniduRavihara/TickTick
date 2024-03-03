@@ -37,6 +37,9 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpenBottomSheet]);
 
+  // ----------------------------------------------
+  // ----------------------------------------------
+
   const updateHeight = (height: number) => {
     if (contentRef.current) {
       contentRef.current.style.height = `${height}vh`;

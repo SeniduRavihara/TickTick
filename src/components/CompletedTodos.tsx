@@ -1,5 +1,5 @@
 import { Box, Collapse, Checkbox } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TiAttachment } from "react-icons/ti";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -22,10 +22,6 @@ function CompletedTodos({
 
   const { setTodoList } = useData();
 
-  useEffect(() => {
-    console.log(selectedTodo.timestamp?.toLocaleString());
-  }, [selectedTodo]);
-
   const handleCheckboxChange = (id: string) => {
     setTodoList((prev) =>
       prev.map((todoObj) =>
@@ -35,9 +31,6 @@ function CompletedTodos({
       )
     );
   };
-
-
-
 
   return (
     <div>
@@ -69,18 +62,11 @@ function CompletedTodos({
                   key={todoObj.id}
                   className="flex justify-between items-center"
                 >
-                  {/* <input
-                    type="checkbox"
-                    className="w-1/12 text-gray-500"
-                    checked={todoObj.completed}
-                    onChange={() => handleCheckboxChange(todoObj.id)}
-                  /> */}
                   <Checkbox
                     colorScheme="gray"
                     iconColor="gray.100"
                     // size="sm"
                     defaultChecked
-                    // checked={todoObj.completed}
                     onChange={() => handleCheckboxChange(todoObj.id)}
                   ></Checkbox>
                   <h1
