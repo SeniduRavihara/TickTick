@@ -101,7 +101,6 @@ const DayView: React.FC = () => {
           renderEvent(
             existingEvent,
             (hourValue - 7) * 60 + minuteValue,
-            existingEvent.title
           )
         );
       } else {
@@ -159,7 +158,7 @@ const DayView: React.FC = () => {
         </div>
         <div className="flex-grow flex flex-col">
           {Array(24 * 2)
-            .fill()
+            .fill(null)
             .map((_, index) => (
               <div key={index} className="h-1 bg-gray-300" />
             ))}
