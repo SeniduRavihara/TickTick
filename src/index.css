@@ -1,78 +1,76 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-/* :root {
-  --fc-border-color: gray;
-  --fc-daygrid-event-dot-width: 1px;
-} */
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+ 
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-:root {
-  --fc-small-font-size: .85em;
-  --fc-page-bg-color: #fff;
-  --fc-neutral-bg-color: rgba(208, 208, 208, 0.3);
-  --fc-neutral-text-color: #808080;
-  --fc-border-color: #ddd;
-
-  --fc-button-text-color: #fff;
-  --fc-button-bg-color: #2C3E50;
-  --fc-button-border-color: #2C3E50;
-  --fc-button-hover-bg-color: #1e2b37;
-  --fc-button-hover-border-color: #1a252f;
-  --fc-button-active-bg-color: #1a252f;
-  --fc-button-active-border-color: #151e27;
-
-  --fc-event-bg-color: #3788d8;
-  --fc-event-border-color: #3788d8;
-  --fc-event-text-color: #fff;
-  --fc-event-selected-overlay-color: rgba(0, 0, 0, 0.25);
-
-  --fc-more-link-bg-color: #d0d0d0;
-  --fc-more-link-text-color: inherit;
-
-  --fc-event-resizer-thickness: 8px;
-  --fc-event-resizer-dot-total-width: 8px;
-  --fc-event-resizer-dot-border-width: 1px;
-
-  --fc-non-business-color: rgba(215, 215, 215, 0.3);
-  --fc-bg-event-color: rgb(143, 223, 130);
-  --fc-bg-event-opacity: 0.3;
-  --fc-highlight-color: rgba(188, 232, 241, 0.3);
-  --fc-today-bg-color: rgba(255, 220, 40, 0.15);
-  --fc-now-indicator-color: red;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+ 
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+ 
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
 }
-
-.fc .fc-col-header-cell-cushion { /* needs to be same precedence */
-  padding-top: 10px; /* an override! */
-  padding-bottom: 5px; /* an override! */
+ 
+@layer base {
+  * {
+    @apply yborder-border;
+  }
+  body {
+    @apply ybg-background ytext-foreground;
+  }
 }
-
-.demo-app {
-  display: flex;
-  min-height: 100%;
-  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-  font-size: 14px;
-}
-
-.demo-app-sidebar {
-  width: 300px;
-  line-height: 1.5;
-  background: #eaf9ff;
-  border-right: 1px solid #d3e2e8;
-}
-
-.demo-app-sidebar-section {
-  padding: 2em;
-}
-
-.demo-app-main {
-  flex-grow: 1;
-  padding: 3em;
-}
-
-.fc { /* the calendar root */
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-
