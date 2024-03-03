@@ -98,7 +98,11 @@ const DayView: React.FC = () => {
 
       if (existingEvent) {
         schedule.push(
-          renderEvent(existingEvent, (hourValue - 7) * 60 + minuteValue)
+          renderEvent(
+            existingEvent,
+            (hourValue - 7) * 60 + minuteValue,
+            existingEvent.title
+          )
         );
       } else {
         schedule.push(
@@ -142,14 +146,12 @@ const DayView: React.FC = () => {
           Next
         </button>
       </header>
-      {/* ---------------------------------------------------------------------------- */}
       <div className="flex flex-row">
-        <div className=" flex flex-col border-r border-gray-300">
+        <div className="w-15 flex flex-col border-r border-gray-300">
           {hours.map((hour) => (
             <div
               key={hour}
-              className="text-right px-3 border-b border-gray-300"
-              style={{}}
+              className="text-right px-2 py-1 border-b border-gray-300"
             >
               {hour}
             </div>
