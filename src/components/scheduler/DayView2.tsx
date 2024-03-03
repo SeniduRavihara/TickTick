@@ -6,7 +6,7 @@ type Event = {
   duration: number; // Duration in hours (fractional allowed)
 };
 
-const DayView: React.FC = () => {
+const DayView2: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]); // Array to hold event data
   const [selectedDate, setSelectedDate] = useState(new Date()); // Selected date
 
@@ -33,7 +33,16 @@ const DayView: React.FC = () => {
     "16:30",
     "17:00",
     "17:30",
-    "18:00",
+    "18:00", /////
+    "19:00",
+    "20:30",
+    "21:00",
+    "22:30",
+    "23:00",
+    "24:30",
+    "25:00",
+    "26:30",
+    "27:00",
   ]; // Define working hours with 30-minute intervals
 
   const handleEventClick = (event: Event) => {
@@ -117,7 +126,7 @@ const DayView: React.FC = () => {
   };
 
   return (
-    <div className="day-view bg-gray-100 flex flex-col">
+    <div className="day-view bg-gray-100 flex w-screen flex-col">
       <header className="bg-white flex justify-between p-2">
         {/* Navigation buttons (previous/next day) and date display */}
         <button
@@ -142,36 +151,24 @@ const DayView: React.FC = () => {
           Next
         </button>
       </header>
+
       {/* ---------------------------------------------------------------------------- */}
-      <div className="flex flex-row">
-        <div className=" flex flex-col border-r border-gray-300">
+      <div className="flex flex-row mb-[50px]">
+        <div className=" flex flex-col">
           {hours.map((hour) => (
             <div
               key={hour}
-              className="text-right px-3 border-b border-gray-300"
-              style={{}}
+              className="text-right w-screen flex border-b border-gray-300"
+              style={{height: "30px"}}
             >
-              {hour}
+              <div className="border-r px-3 border-gray-300">{hour}</div>
+              {/* <div className="px-5"></div> */}
             </div>
           ))}
-        </div>
-        <div className="flex-grow flex flex-col">
-          {Array(24 * 2)
-            .fill()
-            .map((_, index) => (
-              <div key={index} className="h-1 bg-gray-300" />
-            ))}
-          {renderDay()}
-          <button
-            onClick={() => addEvent("Sleeping")}
-            className="mt-2 bg-green-500 text-white px-4 py-1 rounded"
-          >
-            Add Event
-          </button>
         </div>
       </div>
     </div>
   );
 };
 
-export default DayView;
+export default DayView2;
