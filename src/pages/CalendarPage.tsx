@@ -1,6 +1,10 @@
-function CalendarPage() {
+import DayView from "../components/scheduler/DayView";
+
+const CalendarPage = () => {
   return (
-    <div>CalendarPage</div>
-  )
-}
-export default CalendarPage
+    <div>
+      <DayView />
+    </div>
+  );
+};
+export default CalendarPage;

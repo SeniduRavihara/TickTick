@@ -15,3 +15,44 @@ export async function base64FromPath(path: string): Promise<string> {
     reader.readAsDataURL(blob);
   });
 }
+
+export const formatDateString = (dateString: Date | undefined): string => {
+  
+  if(dateString){
+    const date = new Date(dateString);
+
+     if (isNaN(date.getTime())) {
+       throw new Error("Invalid date string");
+     }
+     const weekdays: string[] = [
+       "Sun",
+       "Mon",
+       "Tue",
+       "Wed",
+       "Thu",
+       "Fri",
+       "Sat",
+     ];
+     const months: string[] = [
+       "Jan",
+       "Feb",
+       "Mar",
+       "Apr",
+       "May",
+       "Jun",
+       "Jul",
+       "Aug",
+       "Sep",
+       "Oct",
+       "Nov",
+       "Dec",
+     ];
+     return `Last ${weekdays[date.getDay()]}, ${date.getDate()} ${
+       months[date.getMonth()]
+     }`;
+  }else{
+    return ""
+  }
+
+ 
+};
