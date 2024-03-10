@@ -86,7 +86,7 @@ function TodoListPage() {
   // const handleClickThreeDots = () => {};
 
   return (
-    <div className="w-screen h-screen flex flex-col gap-10 p-3 ">
+    <div className="w-screen h-screen overflow-y-scroll flex flex-col gap-10 p-3 ">
       <div className="flex items-center justify-between px-2 pt-2">
         <div className="flex items-center gap-5 text-2xl">
           <SlMenu onClick={onOpen} />

@@ -1,7 +1,23 @@
+// import useData from "@/hooks/useData";
 import { useState } from "react";
 
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Button } from "../ui/button";
+
 const DayView2 = () => {
-  const [showAddTab, setShowAddTab] = useState(false);
+  // const [showAddTab, setShowAddTab] = useState(false);
+  const [slectedTimeSlot, setSlectedTimeSlot] = useState("");
+
+  // const { todoList, setTodoList } = useData();
 
   const hours: string[] = [
     "07:00",
@@ -29,8 +45,12 @@ const DayView2 = () => {
     "18:00",
   ];
 
-  const handleClickSlot = () => {
-    setShowAddTab(true);
+  const handleAddEventClick = () => {
+    // alert("Add event clicked");
+  };
+
+  const handleClickSlot = (hour: string) => {
+    setSlectedTimeSlot(hour);
   };
 
   return (
@@ -48,16 +68,46 @@ const DayView2 = () => {
             className="border-b flex flex-row items-center border-gray-300 h-[30px]"
           >
             <div
-              className={`border-r text-center flex items-center justify-center border-gray-300 h-[30px] w-[50px]`}
+              className={`border-r text-center text-xs text-gray-500 flex items-start justify-center border-gray-300 h-[30px] w-[50px]`}
             >
               {hour}
             </div>
             <div
               className="h-[30px]"
               style={{ width: "calc(100% - 50px)" }}
-              onClick={() => handleClickSlot()}
-              onDoubleClick={() => alert("Clicked")}
-            ></div>
+              onClick={() => handleClickSlot(hour)}
+            >
+              {slectedTimeSlot === hour && (
+                <Drawer>
+                  <DrawerTrigger
+                    onClick={() => handleAddEventClick()}
+                    className="bg-sky-400 text-white px-4 h-full w-full rounded"
+                  >
+                    Add Event
+                  </DrawerTrigger>
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                      <DrawerDescription>
+                        This action cannot be undone.
+                        This action cannot be undone.
+                        This action cannot be undone.
+                        This action cannot be undone.
+                        This action cannot be undone.
+                        This action cannot be undone.
+                        <div className="h-[350px]"></div>
+                      </DrawerDescription>
+                    </DrawerHeader>
+                    <DrawerFooter>
+                      <Button>Submit</Button>
+                      <DrawerClose>
+                        <Button variant="outline">Cancel</Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              )}
+            </div>
           </div>
         ))}
       </div>

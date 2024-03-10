@@ -9,6 +9,7 @@ import useData from "../hooks/useData";
 import { TodoObj } from "../types";
 import { INITIAL_NEW_TODO_OBJ } from "../constants";
 import { formatDateString } from "../utils";
+import TextareaAutosize from "react-textarea-autosize";
 
 function CompletedTodos({
   compleatedTodoList,
@@ -17,6 +18,8 @@ function CompletedTodos({
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [todoInput, setTodoInput] = useState("");
+  const [discriptionInput, setDiscriptionInput] = useState("");
   const [selectedTodo, setSelectedTodo] =
     useState<TodoObj>(INITIAL_NEW_TODO_OBJ);
 
@@ -27,6 +30,41 @@ function CompletedTodos({
       prev.map((todoObj) =>
         todoObj.id === id
           ? { ...todoObj, completed: !todoObj.completed }
+          : todoObj
+      )
+    );
+  };
+
+  const handleClickTodo = (todoObj: TodoObj) => {
+    setSelectedTodo(todoObj);
+    setTodoInput(todoObj.todo);
+    setDiscriptionInput(todoObj.discription);
+    setIsOpenBottomSheet(true);
+  };
+
+  const handleChangeTodoInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    selectedTodo: TodoObj
+  ) => {
+    setTodoInput(e.target.value);
+    setTodoList((prev) =>
+      prev.map((todoObj) =>
+        todoObj.id === selectedTodo.id
+          ? { ...todoObj, todo: e.target.value }
+          : todoObj
+      )
+    );
+  };
+
+  const handleChangeDiscriptionInput = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    selectedTodo: TodoObj
+  ) => {
+    setDiscriptionInput(e.target.value);
+    setTodoList((prev) =>
+      prev.map((todoObj) =>
+        todoObj.id === selectedTodo.id
+          ? { ...todoObj, discription: e.target.value }
           : todoObj
       )
     );
@@ -71,10 +109,7 @@ function CompletedTodos({
                   ></Checkbox>
                   <h1
                     className="text-md text-gray-400 w-9/12"
-                    onClick={() => {
-                      setSelectedTodo(todoObj);
-                      setIsOpenBottomSheet(true);
-                    }}
+                    onClick={() => handleClickTodo(todoObj)}
                   >
                     {todoObj.todo}
                   </h1>
@@ -108,11 +143,22 @@ function CompletedTodos({
             <TbFlag3 />
           </div>
 
-          <div className="mt-4">
-            <h1 className="text-black text-xl font-bold">
+          <div className="mt-4 flex flex-col">
+            {/* <h1 className="text-black text-xl font-bold">
               {selectedTodo.todo}
-            </h1>
-            <p>{selectedTodo.discription}</p>
+            </h1> */}
+            <input
+              type="text"
+              className="text-black text-xl font-bold outline-none"
+              value={todoInput}
+              onChange={(e) => handleChangeTodoInput(e, selectedTodo)}
+            />
+            {/* <p>{selectedTodo.discription}</p> */}
+            <TextareaAutosize
+              value={discriptionInput}
+              className="text-black text-xl outline-none resize-none"
+              onChange={(e) => handleChangeDiscriptionInput(e, selectedTodo)}
+            />
           </div>
         </div>
       </BottomSheet>
