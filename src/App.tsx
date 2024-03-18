@@ -4,12 +4,12 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import RootLayout from "./layouts/RootLayout";
-import NotFound from "./components/NotFound";
-import TodoListPage from "./pages/TodoListPage";
-import CalendarPage from "./pages/CalendarPage";
-import HabitTrackPage from "./pages/HabitTrackPage";
-import SettingsPage from "./pages/SettingsPage";
+import RootLayout from "@/layouts/RootLayout";
+import NotFound from "@/components/NotFound";
+import TodoListPage from "@/pages/todoListPage/TodoListPage";
+import CalendarPage from "@/pages/calendarPage/CalendarPage";
+import HabitTrackPage from "@/pages/habitTrackPage/HabitTrackPage";
+import SettingsPage from "@/pages/settingsPage/SettingsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

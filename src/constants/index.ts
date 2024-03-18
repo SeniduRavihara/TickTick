@@ -7,6 +7,7 @@ export const exampleData: TodoObj[] = [
     discription: "This is task1",
     completed: false,
     timestamp: new Date(),
+    tags: [],
   },
   {
     id: "2",
@@ -14,6 +15,7 @@ export const exampleData: TodoObj[] = [
     discription: "This is task1",
     completed: true,
     timestamp: new Date(),
+    tags: [],
   },
   {
     id: "3",
@@ -21,6 +23,7 @@ export const exampleData: TodoObj[] = [
     discription: "This is task1",
     completed: false,
     timestamp: new Date(),
+    tags: [],
   },
   {
     id: "4",
@@ -28,6 +31,7 @@ export const exampleData: TodoObj[] = [
     discription: "This is task1",
     completed: true,
     timestamp: new Date(),
+    tags: [],
   },
   {
     id: "5",
@@ -35,6 +39,7 @@ export const exampleData: TodoObj[] = [
     discription: "This is task5",
     completed: true,
     timestamp: new Date(),
+    tags: [],
   },
 ];
 

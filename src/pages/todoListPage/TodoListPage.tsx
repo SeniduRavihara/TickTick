@@ -1,5 +1,5 @@
-import CompletedTodos from "../components/CompletedTodos";
-import PendingTodos from "../components/PendingTodos";
+import CompletedTodos from "@/components/CompletedTodos";
+import PendingTodos from "@/components/PendingTodos";
 
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoMdArrowBack } from "react-icons/io";
@@ -9,13 +9,8 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { TbPhoto } from "react-icons/tb";
 import { LuLayoutTemplate } from "react-icons/lu";
 import { GoScreenFull } from "react-icons/go";
-import { RiAccountCircleFill } from "react-icons/ri";
-import { IoIosSearch } from "react-icons/io";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoToday } from "react-icons/io5";
-import { FaInbox } from "react-icons/fa6";
 
-import useData from "../hooks/useData";
+import useData from "@/hooks/useData";
 import { useState } from "react";
 
 import {
@@ -27,11 +22,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { TodoObj } from "../types";
-import MinDrawerContent from "../components/MinDrawerContent";
-import FullDrawerContent from "../components/FullDrawerContent";
-import { INITIAL_NEW_TODO_OBJ } from "../constants";
-import Menu from "../components/Menu";
+import { TodoObj } from "@/types";
+import MinDrawerContent from "@/components/MinDrawerContent";
+import FullDrawerContent from "@/components/FullDrawerContent";
+import { INITIAL_NEW_TODO_OBJ } from "@/constants";
+import Menu from "@/components/Menu";
+import Sidebar from "@/components/Sidebar";
 
 const menuItems = [
   {
@@ -52,12 +48,15 @@ const menuItems = [
 ];
 
 function TodoListPage() {
-  const [isOpenModalSheet, setOpenModalSheet] = useState(false);
-  const [newTodo, setNewTodo] = useState<TodoObj>(INITIAL_NEW_TODO_OBJ);
-  const [fullScreen, setFullScreen] = useState(false);
-  // const [openSidebar, setOpenSidebar] = useState(true);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpenInputTodoSheet, setIsOpenInputTodoSheet] = useState(false);
+  const [fullScreenInputTodoSheet, setFullScreenInputTodoSheet] = useState(false);
 
+  const [newTodo, setNewTodo] = useState<TodoObj>(INITIAL_NEW_TODO_OBJ);
+
+  const { isOpen: isOpenSidebar, onOpen, onClose: onCloseSidebar } = useDisclosure();
+  const [selected, setSelected] = useState<string | null>(null);
+
+  0;
   const { todoList, setTodoList } = useData();
 
   // useEffect(() => {
@@ -65,7 +64,7 @@ function TodoListPage() {
   // }, [todoList]);
 
   const handleAddClick = async () => {
-    setOpenModalSheet(true);
+    setIsOpenInputTodoSheet(true);
   };
 
   const handleAddTodo = () => {
@@ -74,13 +73,13 @@ function TodoListPage() {
       { ...newTodo, timestamp: new Date(), id: String(todoList.length + 1) },
     ]);
     setNewTodo(INITIAL_NEW_TODO_OBJ);
-    setOpenModalSheet(false);
+    setIsOpenInputTodoSheet(false);
   };
 
   const handleClickPhoto = () => {};
   const handleClickTemplate = () => {};
   // const handleClickFullScreen = () => {
-  //   setFullScreen(true);
+  //   setFullScreenInputTodoSheet(true);
   // };
 
   // const handleClickThreeDots = () => {};
@@ -104,34 +103,12 @@ function TodoListPage() {
       </div>
 
       {/* <Sidebar styles={`${openSidebar ? "-ml-[500px]" : "ml-0"}`} /> */}
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
-        <DrawerOverlay />
-        <DrawerContent maxW="90%" backgroundColor="gray.500">
-          {/* <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader> */}
-          <DrawerBody>
-            <div className="flex flex-col gap-10 py-5 text-white">
-              <div className="flex items-center gap-5">
-                <RiAccountCircleFill className="text-6xl" />
-                <p>Sign in or Sign up</p>
-                <div className="flex gap-2">
-                  <IoIosSearch className="text-3xl" />
-                  <IoSettingsOutline className="text-3xl" />
-                </div>
-              </div>
-              <ul className="flex flex-col gap-4">
-                <li className="flex items-center gap-3">
-                  <IoToday className="text-3xl" />{" "}
-                  <p className="text-xl">Today</p>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FaInbox className="text-3xl" /> <p className="text-xl">Inbox</p>
-                </li>
-                
-              </ul>
-            </div>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
+      <Sidebar
+        isOpenSidebar={isOpenSidebar}
+        onCloseSidebar={onCloseSidebar}
+        selected={selected}
+        setSelected={setSelected}
+      />
 
       <PendingTodos
         pendingTodoList={todoList.filter((todoObj) => !todoObj.completed)}
@@ -145,11 +122,11 @@ function TodoListPage() {
       />
 
       <div>
-        {!fullScreen ? (
+        {!fullScreenInputTodoSheet ? (
           <Drawer
             placement={"bottom"}
-            onClose={() => setOpenModalSheet(false)}
-            isOpen={isOpenModalSheet}
+            onClose={() => setIsOpenInputTodoSheet(false)}
+            isOpen={isOpenInputTodoSheet}
             isFullHeight={false}
           >
             <DrawerOverlay />
@@ -159,7 +136,7 @@ function TodoListPage() {
                 <MinDrawerContent
                   handleAddTodo={handleAddTodo}
                   newTodo={newTodo}
-                  setFullScreen={setFullScreen}
+                  setFullScreenInputTodoSheet={setFullScreenInputTodoSheet}
                   setNewTodo={setNewTodo}
                   handleClickPhoto={handleClickPhoto}
                   handleClickTemplate={handleClickTemplate}
@@ -170,8 +147,8 @@ function TodoListPage() {
         ) : (
           <Drawer
             placement={"bottom"}
-            onClose={() => setOpenModalSheet(false)}
-            isOpen={isOpenModalSheet}
+            onClose={() => setIsOpenInputTodoSheet(false)}
+            isOpen={isOpenInputTodoSheet}
             isFullHeight={true}
           >
             <DrawerOverlay />
@@ -180,14 +157,14 @@ function TodoListPage() {
               <DrawerBody>
                 <IoMdArrowBack
                   onClick={() => {
-                    setOpenModalSheet(false);
-                    setFullScreen(false);
+                    setIsOpenInputTodoSheet(false);
+                    setFullScreenInputTodoSheet(false);
                   }}
                 />
                 <FullDrawerContent
                   handleAddTodo={handleAddTodo}
                   newTodo={newTodo}
-                  setFullScreen={setFullScreen}
+                  setFullScreenInputTodoSheet={setFullScreenInputTodoSheet}
                   setNewTodo={setNewTodo}
                 />
               </DrawerBody>

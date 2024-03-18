@@ -18,7 +18,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
   // const [selectedPhoto, setSelectedPhoto] = useState<UserPhoto | null>(null);
   const [todoList, setTodoList] = useState<TodoListType>(exampleData);
 
-
   useEffect(() => {
     loadDataLocally("todoListData.json").then((data) => {
       const locallySavedTodoList = data?.map((todoObj) => ({
@@ -28,7 +27,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
       setTodoList(locallySavedTodoList ? locallySavedTodoList : exampleData);
     });
   }, []);
-
 
   useEffect(() => {
     // console.log(todoList);
