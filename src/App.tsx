@@ -7,9 +7,9 @@ import {
 import RootLayout from "@/layouts/RootLayout";
 import NotFound from "@/components/NotFound";
 import TodoListPage from "@/pages/todoListPage/TodoListPage";
-import CalendarPage from "@/pages/calendarPage/CalendarPage";
-import HabitTrackPage from "@/pages/habitTrackPage/HabitTrackPage";
-import SettingsPage from "@/pages/settingsPage/SettingsPage";
+import CalendarPage from "@/pages/calendarPage/page-file/CalendarPage";
+import HabitTrackPage from "@/pages/habitTrackPage/page-file/HabitTrackPage";
+import SettingsPage from "@/pages/settingsPage/page-file/SettingsPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

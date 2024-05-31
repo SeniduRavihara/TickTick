@@ -89,18 +89,17 @@ const DayView2 = () => {
                     <DrawerHeader>
                       <DrawerTitle>Are you absolutely sure?</DrawerTitle>
                       <DrawerDescription>
-                        This action cannot be undone.
-                        This action cannot be undone.
-                        This action cannot be undone.
-                        This action cannot be undone.
-                        This action cannot be undone.
-                        This action cannot be undone.
-                        <div className="h-[350px]"></div>
+                        This action cannot be undone. This action cannot be
+                        undone. This action cannot be undone. This action cannot
+                        be undone. This action cannot be undone. This action
+                        cannot be undone.
                       </DrawerDescription>
                     </DrawerHeader>
+                    <div className="h-[350px]"></div>
+
                     <DrawerFooter>
                       <Button>Submit</Button>
-                      <DrawerClose>
+                      <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
                       </DrawerClose>
                     </DrawerFooter>

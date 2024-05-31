@@ -1,6 +1,8 @@
 // import { useEffect } from "react";
 // import "./style.css";
 
+import Scheduler from "@/testing/TodoScheduler"
+
 // const HabitTrackPage = () => {
 //   useEffect(() => {
 //     const colorPalette = [
@@ -161,7 +163,7 @@
 
 const HabitTrackPage = () => {
   return (
-    <div>HabitTrackPage</div>
+    <div><Scheduler /></div>
   )
 }
 export default HabitTrackPage

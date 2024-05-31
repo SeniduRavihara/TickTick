@@ -50,6 +50,9 @@ export const INITIAL_NEW_TODO_OBJ = {
   discription: "",
   todo: "",
   timestamp: new Date(),
+  tags: [],
 };
 
 export const INITIAL_DATA_CONTEXT = { todoList: [], setTodoList: () => {} };
+
+// ------------------------------------------

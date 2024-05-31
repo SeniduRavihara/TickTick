@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1000812617195",
+    "project_id": "ticktick-f4f63",
+    "storage_bucket": "ticktick-f4f63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000812617195:android:fa847fb8fd296cc1484dae",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000812617195-c1cnjfqb2gdunlmhosvdu7q12ruk8diu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkKPSeXBC5nKmp_0mIYTM3H7wH0SX3J9M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000812617195-c1cnjfqb2gdunlmhosvdu7q12ruk8diu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

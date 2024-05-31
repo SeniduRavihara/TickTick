@@ -1,0 +1,76 @@
+.scheduler {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+.time-slot {
+  position: relative;
+  border: 1px solid #ddd;
+  height: 50px;
+}
+
+.time-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: left;
+  padding-left: 5px;
+  background-color: #f5f5f5;
+  z-index: 1;
+}
+
+.task {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  cursor: move;
+  z-index: 2;
+}
+
+
+/* --- */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.click-position {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+
+
+/* ----------- */
+.resizable-box {
+  width: 200px;
+  height: 200px; /* Initial height */
+  border: 1px solid #ccc;
+  overflow: auto;
+  resize: vertical; /* Allow resizing vertically */
+}
+
+.content {
+  height: 100%; /* Fill the resizable box */
+}
+

@@ -8,23 +8,23 @@ import { IoSendSharp } from "react-icons/io5";
 import { TbPhoto } from "react-icons/tb";
 import { LuLayoutTemplate } from "react-icons/lu";
 import { GoScreenFull } from "react-icons/go";
-import { TodoObj } from "../types";
+import { TodoObj } from "@/types";
 
 type FullDrawerContentType = {
   newTodo: TodoObj;
   setNewTodo: React.Dispatch<React.SetStateAction<TodoObj>>;
   handleAddTodo: () => void;
-  setFullScreen: React.Dispatch<React.SetStateAction<boolean>>;
+  setFullScreenInputTodoSheet: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 function FullDrawerContent({
   newTodo,
   setNewTodo,
   handleAddTodo,
-  setFullScreen,
+  setFullScreenInputTodoSheet,
 }: FullDrawerContentType) {
   const handleClickFullScreen = () => {
-    setFullScreen(true);
+    setFullScreenInputTodoSheet(true);
   };
 
   return (

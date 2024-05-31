@@ -17,8 +17,8 @@ import {
   DrawerOverlay,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import Menu from "./Menu";
-import AddTag from "./AddTag";
+import Menu from "../../../components/Menu";
+import AddTag from "../../../components/AddTag";
 
 type sidebarProps = {
   isOpenSidebar: boolean;

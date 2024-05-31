@@ -1,17 +1,23 @@
-import { TodoListType, TodoObj } from "../types";
+import { Box, Collapse, Checkbox } from "@chakra-ui/react";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TiAttachment } from "react-icons/ti";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TbFlag3 } from "react-icons/tb";
-import BottomSheet from "./bottom_sheet/BottomSheet";
-import useData from "../hooks/useData";
-import { Checkbox } from "@chakra-ui/react";
-import { formatDateString } from "../utils";
-import { INITIAL_NEW_TODO_OBJ } from "../constants";
+
+import BottomSheet from "@/components/bottom_sheet/BottomSheet";
+import useData from "@/hooks/useData";
+import { TodoObj } from "@/types";
+import { INITIAL_NEW_TODO_OBJ } from "@/constants";
+import { formatDateString } from "@/utils";
 import TextareaAutosize from "react-textarea-autosize";
 
-function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
+function CompletedTodos({
+  compleatedTodoList,
+}: {
+  compleatedTodoList: Array<TodoObj>;
+}) {
+  const [isOpen, setIsOpen] = useState(true);
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
   const [todoInput, setTodoInput] = useState("");
   const [discriptionInput, setDiscriptionInput] = useState("");
@@ -70,31 +76,50 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
       <div
         className={`w-full bg-white/50 shadow-sm rounded-lg flex flex-col p-3`}
       >
-        <div className="flex justify-between items-center">
-          <h1 className="text-gray-600 font-bold">PENDING</h1>
+        <div
+          className="flex justify-between items-center"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <h1 className="text-gray-600 font-bold">COMPLEATED</h1>
+          <div>{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</div>
         </div>
 
-        <ul
-          className={`text-blue-900 flex flex-col divide-y divide-slate-900/10`}
-        >
-          {pendingTodoList.map((todoObj) => (
-            <li key={todoObj.id} className="flex justify-between items-center">
-              <Checkbox
-                colorScheme="blue"
-                iconColor="gray.100"
-                defaultChecked={false}
-                onChange={() => handleCheckboxChange(todoObj.id)}
-              ></Checkbox>
-              <h1
-                className="text-md text-gray-700 w-9/12 cursor-pointer"
-                onClick={() => handleClickTodo(todoObj)}
-              >
-                {todoObj.todo}
-              </h1>
-              <TiAttachment className="cursor-pointer 2/12" />
-            </li>
-          ))}
-        </ul>
+        <Collapse in={isOpen} animateOpacity>
+          <Box
+            p="20px"
+            color="gray.500"
+            mt="0"
+            bg="#F2F3F5"
+            rounded="md"
+            shadow="md"
+          >
+            <ul
+              className={`text-blue-900 flex flex-col divide-y divide-slate-900/10`}
+            >
+              {compleatedTodoList.map((todoObj) => (
+                <li
+                  key={todoObj.id}
+                  className="flex justify-between items-center"
+                >
+                  <Checkbox
+                    colorScheme="gray"
+                    iconColor="gray.100"
+                    // size="sm"
+                    defaultChecked
+                    onChange={() => handleCheckboxChange(todoObj.id)}
+                  ></Checkbox>
+                  <h1
+                    className="text-md text-gray-400 w-9/12"
+                    onClick={() => handleClickTodo(todoObj)}
+                  >
+                    {todoObj.todo}
+                  </h1>
+                  <TiAttachment className="cursor-pointer 2/12" />
+                </li>
+              ))}
+            </ul>
+          </Box>
+        </Collapse>
       </div>
 
       <BottomSheet
@@ -113,6 +138,7 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
 
           <div className="flex justify-between items-center">
             <div className="text-gray-600">
+              {/* Last Mon, 29 Jan */}
               {formatDateString(selectedTodo.timestamp)}
             </div>
             <TbFlag3 />
@@ -129,13 +155,6 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
               onChange={(e) => handleChangeTodoInput(e, selectedTodo)}
             />
             {/* <p>{selectedTodo.discription}</p> */}
-            {/* <textarea
-              value={discriptionInput}
-              className="text-black text-xl outline-none"
-              onChange={(e) => handleChangeDiscriptionInput(e, selectedTodo)}
-            >
-              {discriptionInput}
-            </textarea> */}
             <TextareaAutosize
               value={discriptionInput}
               className="text-black text-xl outline-none resize-none"
@@ -147,4 +166,4 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
     </div>
   );
 }
-export default PendingTodos;
+export default CompletedTodos;
