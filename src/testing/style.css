@@ -33,6 +33,12 @@
   z-index: 2;
 }
 
+.dragging {
+  opacity: 0.5;
+  border: 2px dashed hsl(0, 0%, 12%);
+}
+
+
 
 /* --- */
 
@@ -73,4 +79,8 @@
 .content {
   height: 100%; /* Fill the resizable box */
 }
+
+
+
+
 

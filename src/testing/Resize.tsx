@@ -54,7 +54,7 @@ const ResizableBox = () => {
     if (isLongPress) return;
     const timeout = setTimeout(() => {
       setIsLongPress(true);
-      alert("Working");
+      // alert("Working");
     }, 500); // 500ms for a long press
 
     setLongPressTimeout(timeout);
