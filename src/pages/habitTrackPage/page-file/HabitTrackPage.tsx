@@ -1,7 +1,8 @@
 // import { useEffect } from "react";
 // import "./style.css";
 
-import Scheduler from "@/testing/TodoScheduler"
+import Scheduler2 from "@/testing/TodoSchedular2";
+import Scheduler from "@/testing/TodoScheduler";
 
 // const HabitTrackPage = () => {
 //   useEffect(() => {
@@ -160,10 +161,12 @@ import Scheduler from "@/testing/TodoScheduler"
 
 // export default HabitTrackPage;
 
-
 const HabitTrackPage = () => {
   return (
-    <div><Scheduler /></div>
-  )
-}
-export default HabitTrackPage
+    <div>
+      {/* <Scheduler /> */}
+      <Scheduler2 />
+    </div>
+  );
+};
+export default HabitTrackPage;
