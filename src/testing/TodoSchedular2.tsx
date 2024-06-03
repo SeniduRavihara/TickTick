@@ -16,8 +16,8 @@ const Scheduler = () => {
     { title: "Task 3", start: "06:00", duration: 4 },
   ]);
 
-  const longPressTimeout = useRef(null);
-  const draggedElement = useRef(null);
+   const longPressTimeout = useRef<number | undefined>(undefined);
+  const draggedElement = useRef<HTMLElement | null>(null);
 
   const generateTimeSlots = () => {
     const slots = [];
@@ -36,33 +36,49 @@ const Scheduler = () => {
     const { offsetX, offsetY } = e.nativeEvent;
     setClickPosition({ x: offsetX, y: offsetY });
     setDraging(true);
-    draggedElement.current = e.target;
-    draggedElement.current.classList.add("dragging");
-  };
+    // draggedElement.current = e.target;
+    // draggedElement.current.classList.add("dragging");
 
-  const handleTouchStart = (
-    e: React.TouchEvent<HTMLDivElement>,
-    task: TaskType
-  ) => {
-    const touch = e.touches[0];
-    const rect = e.target.getBoundingClientRect();
-    const offsetX = touch.clientX - rect.left;
-    const offsetY = touch.clientY - rect.top;
+    const target = e.currentTarget as HTMLElement;
+    draggedElement.current = target;
+    console.log("Dragged Element:", draggedElement.current);
 
-    longPressTimeout.current = setTimeout(() => {
-      setClickPosition({ x: offsetX, y: offsetY });
-      e.target.dataset.task = JSON.stringify(task);
-      setDraging(true);
-      setEnableElement(task.title);
-
-      draggedElement.current = e.target;
+    if (draggedElement.current) {
       draggedElement.current.classList.add("dragging");
-
-      document.body.addEventListener("touchmove", preventDefault, {
-        passive: false,
-      });
-    }, 300); // Long press threshold (300ms)
+    } else {
+      console.error("Dragged element is null");
+    }
   };
+
+const handleTouchStart = (
+  e: React.TouchEvent<HTMLDivElement>,
+  task: TaskType
+) => {
+  const touch = e.touches[0];
+  const target = e.target as HTMLElement;
+  const rect = target.getBoundingClientRect();
+  const offsetX = touch.clientX - rect.left;
+  const offsetY = touch.clientY - rect.top;
+
+  longPressTimeout.current = window.setTimeout(() => {
+    setClickPosition({ x: offsetX, y: offsetY });
+    target.dataset.task = JSON.stringify(task);
+    setDraging(true);
+    setEnableElement(task.title);
+
+    draggedElement.current = target;
+    if (draggedElement.current) {
+      draggedElement.current.classList.add("dragging");
+    } else {
+      console.error("Dragged element is null");
+    }
+
+    document.body.addEventListener("touchmove", preventDefault, {
+      passive: false,
+    });
+  }, 300); // Long press threshold (300ms)
+};
+
 
   const preventDefault = (e: Event) => {
     if (draging) {
@@ -71,6 +87,8 @@ const Scheduler = () => {
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>, slotTime: string) => {
+    console.log(slotTime);
+    
     e.preventDefault();
     const task = JSON.parse(e.dataTransfer.getData("task"));
 
@@ -91,20 +109,17 @@ const Scheduler = () => {
     }
   };
 
-  const handleTouchEnd = (
-    e: React.TouchEvent<HTMLDivElement>,
-    slotTime: string
-  ) => {
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     clearTimeout(longPressTimeout.current);
 
-    if (draging) {
+    if (draging && draggedElement.current) {
       const touch = e.changedTouches[0];
-      const task = JSON.parse(draggedElement.current.dataset.task);
+      const task = JSON.parse(draggedElement.current.dataset.task || "{}");
 
       const dropY = touch.pageY;
       const relativeY = dropY - clickPosition.y;
 
-      const slotHeight = 50; // Assuming each slot is 50px tall
+      const slotHeight = 50;
       const nearestSlotIndex = Math.round(relativeY / slotHeight);
       const nearestSlotTime = generateTimeSlots()[nearestSlotIndex];
 
@@ -124,7 +139,11 @@ const Scheduler = () => {
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     clearTimeout(longPressTimeout.current);
-    if (draging && draggedElement.current) {
+    if (
+      draging &&
+      draggedElement.current &&
+      draggedElement.current.parentElement
+    ) {
       e.preventDefault();
       const touch = e.touches[0];
       const rect = draggedElement.current.parentElement.getBoundingClientRect();
@@ -147,16 +166,21 @@ const Scheduler = () => {
     )}`;
   };
 
-  const handleMouseDown = (event, task: TaskType) => {
-    const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+  const handleMouseDown = (
+    event: React.MouseEvent | React.TouchEvent,
+    task: TaskType
+  ) => {
+    const clientY =
+      "touches" in event ? event.touches[0].clientY : event.clientY;
     setIsResizing(true);
     setResizeStart({ y: clientY, duration: task.duration });
     setEnableElement(task.title);
   };
 
-  const handleMouseMove = (event) => {
-    if (isResizing) {
-      const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+  const handleMouseMove = (event: MouseEvent | TouchEvent) => {
+    if (isResizing && resizeStart) {
+      const clientY =
+        "touches" in event ? event.touches[0].clientY : event.clientY;
       const deltaY = clientY - resizeStart.y;
       const newDuration = Math.max(
         1,
@@ -189,6 +213,7 @@ const Scheduler = () => {
       window.removeEventListener("touchmove", handleMouseMove);
       window.removeEventListener("touchend", handleMouseUp);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isResizing]);
 
   useEffect(() => {
