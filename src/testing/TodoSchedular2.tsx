@@ -243,7 +243,7 @@ const handleTouchStart = (
           className="time-slot"
           onDragOver={handleDragOver}
           onDrop={(e) => handleDrop(e, time)}
-          onTouchEnd={(e) => handleTouchEnd(e, time)}
+          onTouchEnd={(e) => handleTouchEnd(e)}
           onTouchMove={handleTouchMove}
         >
           <div className="time-label">{formatTime(time)}</div>

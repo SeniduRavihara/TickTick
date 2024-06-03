@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import { LuListTodo } from "react-icons/lu";
-import { FaRegCalendar, FaRegCalendarAlt } from "react-icons/fa";
-import { IoMdTime } from "react-icons/io";
-import { IoSettingsOutline } from "react-icons/io5";
+import { FaRegCalendarAlt } from "react-icons/fa";
+
 import { Link, useLocation } from "react-router-dom";
 // import { Haptics, ImpactStyle } from "@capacitor/haptics";
-import { IonIcon } from '@ionic/react';
-import { logoIonic } from 'ionicons/icons';
-import { RiAccountCircleFill, RiAccountCircleLine } from "react-icons/ri";
+import { RiAccountCircleFill } from "react-icons/ri";
 import { SiTodoist, SiYoutubeshorts } from "react-icons/si";
 import { GoClockFill } from "react-icons/go";
 
@@ -56,10 +53,10 @@ function Touchbar() {
 
   const location = useLocation()
 
-  const handleTouchStart = (icon: React.ReactNode) => {
-    setTouchedIcon(icon);
-    // triggerHapticFeedback();
-  };
+  // const handleTouchStart = (icon: React.ReactNode) => {
+  //   setTouchedIcon(icon);
+  //   // triggerHapticFeedback();
+  // };
 
   const handleTouchEnd = () => {
     setTouchedIcon(null);
@@ -77,7 +74,7 @@ function Touchbar() {
           key={obj.label}
           to={obj.to}
           // onTouchStart={() => handleTouchStart(obj.icon)}
-          // onTouchEnd={handleTouchEnd}
+          onTouchEnd={handleTouchEnd}
           className="w-1/4 items-center justify-center flex flex-col"
         >
           {React.cloneElement(

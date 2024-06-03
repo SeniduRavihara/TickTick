@@ -1,5 +1,5 @@
 import DayView2 from "@/components/scheduler/DayView2";
-import Component from "@/testing/Scedular1";
+// import Component from "@/testing/Scedular1";
 // import DayView from "../components/scheduler/DayView";
 
 const CalendarPage = () => {

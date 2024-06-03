@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from "react";
-import { MenuPropsType } from "../types";
-import { cn } from "@/lib/utils";
+import  { useState, useRef, useEffect } from "react";
+import { MenuPropsType } from "../types"; // Adjust the import path as necessary
+import { cn } from "@/lib/utils"; // Adjust the import path as necessary
 
 function Menu({ items, menuBtn, styles, setSelected }: MenuPropsType) {
   const [open, setOpen] = useState<boolean>(false);
@@ -22,6 +22,12 @@ function Menu({ items, menuBtn, styles, setSelected }: MenuPropsType) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleSetSelected = (label: string) => {
+    if (setSelected) {
+      setSelected(label);
+    }
+  };
 
   return (
     <div className="relative" ref={menuRef}>
@@ -46,10 +52,9 @@ function Menu({ items, menuBtn, styles, setSelected }: MenuPropsType) {
             <button
               className="flex gap-3 justify-center items-center"
               onClick={() => {
-                item.onClick;
-                setSelected(item.label);
+                item.onClick();
+                handleSetSelected(item.label);
               }}
-              // aria-label={item.label}
             >
               <div>{item.icon}</div>
               <div>{item.label}</div>
