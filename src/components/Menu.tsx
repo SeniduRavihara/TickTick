@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { MenuPropsType } from "../types";
+import { cn } from "@/lib/utils";
 
-function Menu({ items, menuBtn, styles }: MenuPropsType) {
+function Menu({ items, menuBtn, styles, setSelected }: MenuPropsType) {
   const [open, setOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -34,17 +35,20 @@ function Menu({ items, menuBtn, styles }: MenuPropsType) {
       </button>
 
       <ul
-        className={`${
-          open ? "block" : "hidden"
-        } border-2 rounded-lg px-4 py-2 flex flex-col gap-2 fixed bg-white ${
-          styles ?? ""
-        }`}
+        className={cn(
+          "border-2 rounded-lg px-4 py-2 flex flex-col space-y-3 fixed bg-white",
+          open ? "block" : "hidden",
+          styles
+        )}
       >
         {items.map((item, index) => (
           <li key={index}>
             <button
-              className="flex gap-3"
-              onClick={item.onClick}
+              className="flex gap-3 justify-center items-center"
+              onClick={() => {
+                item.onClick;
+                setSelected(item.label);
+              }}
               // aria-label={item.label}
             >
               <div>{item.icon}</div>

@@ -5,6 +5,7 @@ export type TodoObj = {
   completed: boolean;
   attachmentImage?: string;
   timestamp?: Date;
+  tags: Array<{ title: string; color: string }>;
 };
 
 export type TodoListType = TodoObj[];
@@ -29,4 +30,7 @@ export type MenuPropsType = {
   items: MenuItemType[];
   menuBtn: React.ReactNode;
   styles?: string;
+  setSelected?: React.Dispatch<
+    React.SetStateAction<string | null>
+  >;
 };

@@ -1,4 +1,3 @@
-
 import { CgCalendarTwo } from "react-icons/cg";
 import { TbFlag3 } from "react-icons/tb";
 import { GoTag } from "react-icons/go";
@@ -7,15 +6,16 @@ import { IoSendSharp } from "react-icons/io5";
 import { TbPhoto } from "react-icons/tb";
 import { LuLayoutTemplate } from "react-icons/lu";
 import { GoScreenFull } from "react-icons/go";
-import { TodoObj } from "../types";
+
+import { TodoObj } from "@/types";
 import { useRef } from "react";
-import Menu from "./Menu";
+import Menu from "@/components/Menu";
 
 type MinDrawerContentType = {
   newTodo: TodoObj;
   setNewTodo: React.Dispatch<React.SetStateAction<TodoObj>>;
   handleAddTodo: () => void;
-  setFullScreen: React.Dispatch<React.SetStateAction<boolean>>;
+  setFullScreenInputTodoSheet: React.Dispatch<React.SetStateAction<boolean>>;
   handleClickPhoto: () => void;
   handleClickTemplate: () => void;
 };
@@ -24,14 +24,14 @@ function MinDrawerContent({
   newTodo,
   setNewTodo,
   handleAddTodo,
-  setFullScreen,
+  setFullScreenInputTodoSheet,
   handleClickPhoto,
   handleClickTemplate,
 }: MinDrawerContentType) {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleClickFullScreen = () => {
-    setFullScreen(true);
+    setFullScreenInputTodoSheet(true);
   };
 
   const menuItems = [

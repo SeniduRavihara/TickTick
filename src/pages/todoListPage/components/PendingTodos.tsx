@@ -1,17 +1,20 @@
-import { TodoListType, TodoObj } from "../types";
+import { TodoListType, TodoObj } from "@/types";
 import { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TiAttachment } from "react-icons/ti";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { TbFlag3 } from "react-icons/tb";
-import BottomSheet from "./bottom_sheet/BottomSheet";
-import useData from "../hooks/useData";
+import BottomSheet from "@/components/bottom_sheet/BottomSheet";
+import useData from "@/hooks/useData";
 import { Checkbox } from "@chakra-ui/react";
-import { formatDateString } from "../utils";
-import { INITIAL_NEW_TODO_OBJ } from "../constants";
+import { formatDateString } from "@/utils";
+import { INITIAL_NEW_TODO_OBJ } from "@/constants";
+import TextareaAutosize from "react-textarea-autosize";
 
 function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
   const [isOpenBottomSheet, setIsOpenBottomSheet] = useState(false);
+  const [todoInput, setTodoInput] = useState("");
+  const [discriptionInput, setDiscriptionInput] = useState("");
   const [selectedTodo, setSelectedTodo] =
     useState<TodoObj>(INITIAL_NEW_TODO_OBJ);
 
@@ -22,6 +25,41 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
       prev.map((todoObj) =>
         todoObj.id === id
           ? { ...todoObj, completed: !todoObj.completed }
+          : todoObj
+      )
+    );
+  };
+
+  const handleClickTodo = (todoObj: TodoObj) => {
+    setSelectedTodo(todoObj);
+    setTodoInput(todoObj.todo);
+    setDiscriptionInput(todoObj.discription);
+    setIsOpenBottomSheet(true);
+  };
+
+  const handleChangeTodoInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    selectedTodo: TodoObj
+  ) => {
+    setTodoInput(e.target.value);
+    setTodoList((prev) =>
+      prev.map((todoObj) =>
+        todoObj.id === selectedTodo.id
+          ? { ...todoObj, todo: e.target.value }
+          : todoObj
+      )
+    );
+  };
+
+  const handleChangeDiscriptionInput = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    selectedTodo: TodoObj
+  ) => {
+    setDiscriptionInput(e.target.value);
+    setTodoList((prev) =>
+      prev.map((todoObj) =>
+        todoObj.id === selectedTodo.id
+          ? { ...todoObj, discription: e.target.value }
           : todoObj
       )
     );
@@ -41,12 +79,6 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
         >
           {pendingTodoList.map((todoObj) => (
             <li key={todoObj.id} className="flex justify-between items-center">
-              {/* <input
-                    type="checkbox"
-                    className="w-1/12"
-                    checked={todoObj.completed}
-                    onChange={() => handleCheckboxChange(todoObj.id)}
-                  /> */}
               <Checkbox
                 colorScheme="blue"
                 iconColor="gray.100"
@@ -54,11 +86,8 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
                 onChange={() => handleCheckboxChange(todoObj.id)}
               ></Checkbox>
               <h1
-                className="text-md text-gray-700 w-9/12"
-                onClick={() => {
-                  setSelectedTodo(todoObj);
-                  setIsOpenBottomSheet(true);
-                }}
+                className="text-md text-gray-700 w-9/12 cursor-pointer"
+                onClick={() => handleClickTodo(todoObj)}
               >
                 {todoObj.todo}
               </h1>
@@ -89,11 +118,29 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
             <TbFlag3 />
           </div>
 
-          <div className="mt-4">
-            <h1 className="text-black text-xl font-bold">
+          <div className="mt-4 flex flex-col">
+            {/* <h1 className="text-black text-xl font-bold">
               {selectedTodo.todo}
-            </h1>
-            <p>{selectedTodo.discription}</p>
+            </h1> */}
+            <input
+              type="text"
+              className="text-black text-xl font-bold outline-none"
+              value={todoInput}
+              onChange={(e) => handleChangeTodoInput(e, selectedTodo)}
+            />
+            {/* <p>{selectedTodo.discription}</p> */}
+            {/* <textarea
+              value={discriptionInput}
+              className="text-black text-xl outline-none"
+              onChange={(e) => handleChangeDiscriptionInput(e, selectedTodo)}
+            >
+              {discriptionInput}
+            </textarea> */}
+            <TextareaAutosize
+              value={discriptionInput}
+              className="text-black text-xl outline-none resize-none"
+              onChange={(e) => handleChangeDiscriptionInput(e, selectedTodo)}
+            />
           </div>
         </div>
       </BottomSheet>

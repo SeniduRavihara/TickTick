@@ -6,6 +6,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { DataProvider } from "./context/DataContext.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <AuthProvider>
       <DataProvider>
