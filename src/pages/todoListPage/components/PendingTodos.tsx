@@ -68,7 +68,7 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
   return (
     <div>
       <div
-        className={`w-full bg-white/50 shadow-sm rounded-lg flex flex-col p-3`}
+        className={`w-full bg-[#ffffff09] shadow-sm rounded-lg flex flex-col p-3`}
       >
         <div className="flex justify-between items-center">
           <h1 className="text-gray-600 font-bold">PENDING</h1>
@@ -86,12 +86,12 @@ function PendingTodos({ pendingTodoList }: { pendingTodoList: TodoListType }) {
                 onChange={() => handleCheckboxChange(todoObj.id)}
               ></Checkbox>
               <h1
-                className="text-md text-gray-700 w-9/12 cursor-pointer"
+                className="text-md text-[#d3cfcf] w-9/12 cursor-pointer"
                 onClick={() => handleClickTodo(todoObj)}
               >
                 {todoObj.todo}
               </h1>
-              <TiAttachment className="cursor-pointer 2/12" />
+              <TiAttachment className="cursor-pointer 2/12 text-[#d3cfcf]" />
             </li>
           ))}
         </ul>

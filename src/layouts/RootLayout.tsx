@@ -3,10 +3,9 @@ import Touchbar from "../components/Touchbar";
 
 function RootLayout() {
   return (
-    <div className="bg-gray-200 overflow-x-hidden">
-        <Outlet />
-        <Touchbar />
-        
+    <div className="bg-[#ffffff] overflow-x-hidden">
+      <Outlet />
+      <Touchbar />
     </div>
   );
 }

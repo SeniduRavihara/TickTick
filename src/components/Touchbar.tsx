@@ -10,7 +10,7 @@ import { GoClockFill } from "react-icons/go";
 
 
 const styles = {
-  touchBarIcon: "w-7 h-7 cursor-pointer text-gray-700",
+  touchBarIcon: "w-7 h-7 cursor-pointer text-gray-400",
   touchedIcon: "w-7 h-7", // Add your desired color for the touched state
 };
 
@@ -31,7 +31,7 @@ const touchbarIcons = [
     icon: <SiYoutubeshorts className={`${styles.touchBarIcon}`} />,
     focusIcon: <SiYoutubeshorts className={`${styles.touchBarIcon}`} />,
     label: "Shorts",
-    to: "habit-track-page",
+    to: "shorts-page",
   },
   {
     icon: <GoClockFill className={`${styles.touchBarIcon}`} />,
@@ -68,7 +68,7 @@ function Touchbar() {
   // };
 
   return (
-    <div className="w-full h-[50px] bg-white  fixed bottom-0 p-5 shadow-2xl shadow-black flex items-center justify-between">
+    <div className="w-full z-50 h-[50px] bg-[#ffffff09]  fixed bottom-0 p-5 shadow-2xl shadow-black flex items-center justify-between">
       {touchbarIcons.map((obj) => (
         <Link
           key={obj.label}

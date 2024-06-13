@@ -29,7 +29,7 @@ export function DataProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // console.log(todoList);
+    console.log(todoList);
     if (todoList) saveDataLocally(todoList, "todoListData.json");
   }, [todoList]);
 

@@ -38,7 +38,7 @@ function TodoListPage() {
   // const handleClickThreeDots = () => {};
 
   return (
-    <div className="w-screen h-screen overflow-y-scroll flex flex-col gap-10 p-3 ">
+    <div className="w-screen h-screen overflow-y-scroll flex flex-col gap-10 p-3 bg-[#050505]">
       <Topbar onOpenSidebar={onOpenSidebar} />
 
       <Sidebar
@@ -56,7 +56,7 @@ function TodoListPage() {
       />
 
       <FaCirclePlus
-        className="fixed bottom-16 right-5 text-gray-700 text-5xl"
+        className="fixed bottom-16 right-10 text-[#ada7a7] text-5xl"
         onClick={handleAddClick}
       />
 
@@ -66,8 +66,6 @@ function TodoListPage() {
         setFullScreenInputTodoSheet={setFullScreenInputTodoSheet}
         setIsOpenInputTodoSheet={setIsOpenInputTodoSheet}
       />
-
-      
     </div>
   );
 }

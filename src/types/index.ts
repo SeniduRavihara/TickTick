@@ -4,7 +4,11 @@ export type TodoObj = {
   discription: string;
   completed: boolean;
   attachmentImage?: string;
-  timestamp?: Date;
+  timestamp?: Date; //Todo created Time or last edited time
+  date?: string; //Todo created Date or last edited date
+  start?: string; //Todo started Time
+  duration?: number; //Todo duration in 15min parts
+  repeat?: string;
   tags: Array<{ title: string; color: string }>;
 };
 
@@ -30,7 +34,5 @@ export type MenuPropsType = {
   items: MenuItemType[];
   menuBtn: React.ReactNode;
   styles?: string;
-  setSelected?: React.Dispatch<
-    React.SetStateAction<string | null>
-  >;
+  setSelected?: React.Dispatch<React.SetStateAction<string | null>>;
 };

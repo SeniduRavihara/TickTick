@@ -74,32 +74,39 @@ function CompletedTodos({
   return (
     <div>
       <div
-        className={`w-full bg-white/50 shadow-sm rounded-lg flex flex-col p-3`}
+        className={`w-full bg-[#ffffff09] shadow-sm rounded-lg flex flex-col p-3`}
       >
         <div
           className="flex justify-between items-center"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <h1 className="text-gray-600 font-bold">COMPLEATED</h1>
-          <div>{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</div>
+          <h1 className="text-[#d3cfcf] font-bold">COMPLEATED</h1>
+          <div>
+            {isOpen ? (
+              <IoIosArrowUp className="text-[#d3cfcf]" />
+            ) : (
+              <IoIosArrowDown className="text-[#d3cfcf]" />
+            )}
+          </div>
         </div>
 
-        <Collapse in={isOpen} animateOpacity>
+        <Collapse in={isOpen} animateOpacity className="">
           <Box
             p="20px"
             color="gray.500"
             mt="0"
-            bg="#F2F3F5"
+            bg="#ffffff09"
             rounded="md"
             shadow="md"
+            border={"3px solid #ffffff0e"}
           >
             <ul
-              className={`text-blue-900 flex flex-col divide-y divide-slate-900/10`}
+              className={`text-blue-900 flex flex-col divide-y divide-slate-900/10 `}
             >
               {compleatedTodoList.map((todoObj) => (
                 <li
                   key={todoObj.id}
-                  className="flex justify-between items-center"
+                  className="flex justify-between items-center "
                 >
                   <Checkbox
                     colorScheme="gray"
@@ -109,12 +116,12 @@ function CompletedTodos({
                     onChange={() => handleCheckboxChange(todoObj.id)}
                   ></Checkbox>
                   <h1
-                    className="text-md text-gray-400 w-9/12"
+                    className="text-md text-gray-400 w-9/12 "
                     onClick={() => handleClickTodo(todoObj)}
                   >
                     {todoObj.todo}
                   </h1>
-                  <TiAttachment className="cursor-pointer 2/12" />
+                  <TiAttachment className="cursor-pointer 2/12 text-[#d3cfcf]" />
                 </li>
               ))}
             </ul>

@@ -61,7 +61,7 @@ const Sidebar = ({
     <div>
       <Drawer placement="left" onClose={onCloseSidebar} isOpen={isOpenSidebar}>
         <DrawerOverlay />
-        <DrawerContent maxW="90%" backgroundColor="gray.500">
+        <DrawerContent maxW="90%" backgroundColor="#111111">
           {/* <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader> */}
           <DrawerBody>
             <div className="flex flex-col h-full justify-between gap-10 py-5 text-white">

@@ -26,7 +26,7 @@ const inputTodoSheetMenuItems = [
 
 const Topbar = ({ onOpenSidebar }: { onOpenSidebar: () => void }) => {
   return (
-    <div className="flex items-center justify-between px-2 pt-2">
+    <div className="flex items-center justify-between px-2 pt-2 text-[#ada7a7]">
       <div className="flex items-center gap-5 text-2xl">
         <SlMenu onClick={onOpenSidebar} />
         <h1 className="font-bold">Today</h1>

@@ -1,7 +1,8 @@
 // import { useEffect } from "react";
 // import "./style.css";
 
-import Scheduler2 from "@/testing/TodoSchedular2";
+// import Scheduler2 from "@/testing/TodoSchedular2";
+import Scheduler from "@/testing/TodoSchedular3";
 // import Scheduler from "@/testing/TodoScheduler";
 
 // const HabitTrackPage = () => {
@@ -163,9 +164,10 @@ import Scheduler2 from "@/testing/TodoSchedular2";
 
 const HabitTrackPage = () => {
   return (
-    <div>
+    <div className="">
       {/* <Scheduler /> */}
-      <Scheduler2 />
+      {/* <Scheduler2 /> */}
+      <Scheduler />
     </div>
   );
 };
